@@ -60,7 +60,7 @@ export default function Navbar({ setLang }: NavbarProps) {
         </motion.button>
 
         {/* DESKTOP MENU */}
-        <div className="flex items-center gap-6 text-sm">
+        <div className="hidden md:flex items-center gap-6 text-sm">
 
   <NavItem id="home" label="Home" />
   <NavItem id="services" label="Services" />
