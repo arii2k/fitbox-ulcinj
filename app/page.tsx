@@ -138,12 +138,6 @@ const fadeItem: Variants = {
         >
           {t.callNow}
         </a>
-        <Link
-          href="/login"
-          className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-md font-semibold transition"
-              >
-                Admin Login
-            </Link>
           </div>
         </motion.div>
 
