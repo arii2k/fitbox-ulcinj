@@ -192,7 +192,7 @@ export default function PaymentsPage() {
 
     setPlans((plansData ?? []) as Plan[]);
     setPayments(safePayments);
-    setMemberships((membershipData ?? []) as Membership[]);
+    setMemberships((membershipData ?? []) as any);
 
     setLoading(false);
 
