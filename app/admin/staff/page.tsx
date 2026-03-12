@@ -150,7 +150,7 @@ export default function StaffPage() {
       .eq("gym_id", profile.gym_id);
 
     setRoles(rolesData || []);
-    setStaff(staffData || []);
+    setStaff((staffData ?? []) as any);
 
     setLoading(false);
 
@@ -331,7 +331,7 @@ return data.id;
 
           <div className="grid grid-cols-2 gap-3">
 
-            {Object.entries(permissionList).map(([key,label])=>(
+            {Object.entries(permissionList).map(([key, label]) => (
               <label key={key} className="flex gap-2 items-center">
 
                 <input
@@ -340,7 +340,7 @@ return data.id;
                   onChange={()=>togglePermission(key)}
                 />
 
-                {label} 
+                {label as string} 
 
               </label>
             ))}
