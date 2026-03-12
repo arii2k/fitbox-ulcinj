@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FitBox Ulcinj – IFBB Gym | CrossFit | Bodybuilding",
+  title: "FitBox Ulcinj",
   description:
     "Official IFBB gym in Ulcinj. Personal training, CrossFit, bodybuilding and performance nutrition. Located at Simon Filipaj bb, Ulcinj 85360.",
   icons: {
@@ -21,10 +21,12 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
+};
+
+// ✅ Viewport must be exported separately (Next.js 16 rule)
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { translations } from "./data/translations";
 import Lenis from "lenis";
 import { motion, type Variants } from "framer-motion";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -137,8 +138,14 @@ const fadeItem: Variants = {
         >
           {t.callNow}
         </a>
-      </div>
-    </motion.div>
+        <Link
+          href="/login"
+          className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-md font-semibold transition"
+              >
+                Admin Login
+            </Link>
+          </div>
+        </motion.div>
 
     {/* Right Side Video */}
     <motion.div
