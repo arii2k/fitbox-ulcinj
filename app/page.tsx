@@ -125,7 +125,7 @@ const fadeItem: Variants = {
 
       <div className="flex flex-wrap gap-4 mt-8">
         <a
-          href="https://www.google.com/maps/place/FIT+BOX+%E2%80%A2+GYM+%7C+CROSSFIT+%7C+AEROBIC/@41.9302734,19.2263488"
+          href="https://www.google.com/maps/place/FIT+BOX+%E2%80%A2+GYM+%7C+CROSSFIT+%7C+AEROBIC/@41.9302773,19.2214779,17z/data=!3m1!4b1!4m6!3m5!1s0x134e13006b9ffca3:0xbaa7f70b976fc53d!8m2!3d41.9302734!4d19.2263488!16s%2Fg%2F11vq9tb1xx?entry=ttu&g_ep=EgoyMDI2MDIxMS4wIKXMDSoASAFQAw%3D%3D"
           target="_blank"
           className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-md font-semibold transition"
         >
@@ -623,56 +623,85 @@ const fadeItem: Variants = {
   </div>
 </motion.section>
 
-{/* FOOTER */}
-<footer className="border-t border-gray-900 bg-black py-16">
-  <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+<footer className="border-t border-gray-900 bg-black py-20">
+  <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-12">
 
+    {/* Brand */}
     <div>
       <h3 className="text-xl font-semibold mb-4">FITBOX</h3>
-      <p className="text-gray-500">
+      <p className="text-gray-500 text-sm">
         {t.footerDesc}
       </p>
     </div>
 
+    {/* Contact */}
     <div>
       <h4 className="text-sm uppercase text-gray-500 mb-4 tracking-widest">
         {t.contact}
       </h4>
-      <p className="text-gray-400">{t.address}</p>
-<a
-  href="tel:+38269572744"
-  className="text-gray-400 hover:text-blue-500 transition"
->
-  +382 69 572 744
-</a>
-<p className="text-gray-400">{t.workingHours}</p>
 
+      <p className="text-gray-400">{t.address}</p>
+
+      <a
+        href="tel:+38269572744"
+        className="block text-gray-400 hover:text-blue-500 transition mt-2"
+      >
+        +382 69 572 744
+      </a>
+
+      <p className="text-gray-400 mt-2">{t.workingHours}</p>
     </div>
 
-   <div>
-  <h4 className="text-sm uppercase text-gray-500 mb-4 tracking-widest">
-    {t.social}
-  </h4>
+    {/* Social */}
+    <div>
+      <h4 className="text-sm uppercase text-gray-500 mb-4 tracking-widest">
+        {t.social}
+      </h4>
 
-  <a
-    href="https://www.instagram.com/fitbox_ulcinj"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-gray-400 hover:text-blue-500 transition block"
-  >
-    {t.instagram}
-  </a>
+      <a
+        href="https://www.instagram.com/fitbox_ulcinj"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block text-gray-400 hover:text-blue-500 transition"
+      >
+        Instagram
+      </a>
 
-  <a
-    href="https://www.facebook.com/FitnessCrossfitFIT"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-gray-400 hover:text-blue-500 transition block mt-2"
-  >
-    {t.facebook}
-  </a>
-</div>
+      <a
+        href="https://www.facebook.com/FitnessCrossfitFIT"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block text-gray-400 hover:text-blue-500 transition mt-2"
+      >
+        Facebook
+      </a>
+    </div>
 
+    {/* Software / Developer */}
+    <div>
+      <h4 className="text-sm uppercase text-gray-500 mb-4 tracking-widest">
+        Software
+      </h4>
+
+      <p className="text-gray-400 text-sm">
+        FitBox Gym Management System
+      </p>
+
+      <p className="text-gray-500 text-sm mt-2">
+        Built by Ari Muslijeviq
+      </p>
+
+      <a
+        href="mailto:arijanmuslijevic@gmail.com"
+        className="text-blue-500 hover:underline text-sm mt-3 block"
+      >
+        arijanmuslijevic@gmail.com
+      </a>
+
+      <p className="text-gray-600 text-xs mt-2">
+        SaaS licensing • Partnerships • Custom systems
+      </p>
+    </div>
 
   </div>
 
@@ -680,9 +709,6 @@ const fadeItem: Variants = {
     © {new Date().getFullYear()} FitBox Ulcinj. {t.rights}
   </div>
 </footer>
-
-
-
     </main>
   );
 }

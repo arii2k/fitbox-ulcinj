@@ -11,6 +11,7 @@ export default function MemberProfilePage() {
 
   const [member, setMember] = useState<any>(null);
   const [sessions, setSessions] = useState<any[]>([]);
+  const [plans, setPlans] = useState<any[]>([]);
   const [measurements, setMeasurements] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,6 +20,7 @@ export default function MemberProfilePage() {
   }, []);
 
   const loadData = async () => {
+
     const { data: memberData } = await supabase
       .from("members")
       .select("*")
@@ -36,13 +38,41 @@ export default function MemberProfilePage() {
       .select("*")
       .order("start_time");
 
+    const { data: plansData } = await supabase
+      .from("plans")
+      .select("*")
+      .eq("gym_id", memberData.gym_id);
+
     setMember(memberData);
     setMeasurements(measurementData ?? []);
     setSessions(sessionData ?? []);
+    setPlans(plansData ?? []);
+
     setLoading(false);
   };
 
   const handleUpdate = async () => {
+
+    let start = member.membership_start;
+    let end = member.membership_end;
+
+    if (member.plan_id) {
+      const { data: plan } = await supabase
+      .from("plans")
+      .select("duration_days")
+      .eq("id", member.plan_id)
+      .single();
+
+if (!plan) return;
+
+      const today = new Date();
+      const expiry = new Date();
+      expiry.setDate(today.getDate() + plan.duration_days);
+
+      start = today;
+      end = expiry;
+    }
+
     await supabase
       .from("members")
       .update({
@@ -51,7 +81,10 @@ export default function MemberProfilePage() {
         email: member.email,
         member_type: member.member_type,
         status: member.status,
-        session_id: member.session_id
+        session_id: member.session_id,
+        plan_id: member.plan_id,
+        membership_start: start,
+        membership_end: end
       })
       .eq("id", memberId);
 
@@ -119,7 +152,24 @@ export default function MemberProfilePage() {
           <option value="personal">Personal Training</option>
         </select>
 
-        {/* REAL GROUP SESSION DROPDOWN */}
+        {/* PLAN SELECTOR */}
+        <select
+          value={member.plan_id || ""}
+          onChange={(e) =>
+            setMember({ ...member, plan_id: e.target.value })
+          }
+          className="w-full p-3 bg-gray-800 rounded"
+        >
+          <option value="">No Plan</option>
+
+          {plans.map((plan) => (
+            <option key={plan.id} value={plan.id}>
+              {plan.name} — {plan.duration_days} days — €{plan.price}
+            </option>
+          ))}
+        </select>
+
+        {/* SESSION ASSIGNMENT */}
         <select
           value={member.session_id || ""}
           onChange={(e) =>
@@ -179,46 +229,48 @@ export default function MemberProfilePage() {
           </p>
         )}
       </div>
+
       {/* MEASUREMENT HISTORY */}
-<div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
-  <h2 className="text-xl font-semibold mb-4">
-    Measurement History
-  </h2>
+      <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
+        <h2 className="text-xl font-semibold mb-4">
+          Measurement History
+        </h2>
 
-  <table className="w-full text-sm">
-    <thead className="bg-gray-800">
-      <tr>
-        <th className="p-3 text-left">Date</th>
-        <th className="p-3 text-left">Weight</th>
-        <th className="p-3 text-left">Body Fat</th>
-        <th className="p-3 text-left">Hips</th>
-        <th className="p-3 text-left">Shoulders</th>
-      </tr>
-    </thead>
+        <table className="w-full text-sm">
+          <thead className="bg-gray-800">
+            <tr>
+              <th className="p-3 text-left">Date</th>
+              <th className="p-3 text-left">Weight</th>
+              <th className="p-3 text-left">Body Fat</th>
+              <th className="p-3 text-left">Hips</th>
+              <th className="p-3 text-left">Shoulders</th>
+            </tr>
+          </thead>
 
-   <tbody>
-  {measurements.length === 0 ? (
-    <tr>
-      <td colSpan={5} className="p-4 text-center text-gray-400">
-        No measurements recorded yet.
-      </td>
-    </tr>
-  ) : (
-    measurements.map((m) => (
-      <tr key={m.id} className="border-t border-gray-800">
-        <td className="p-3">
-          {new Date(m.recorded_at).toLocaleDateString()}
-        </td>
-        <td className="p-3">{m.weight ?? "-"}</td>
-        <td className="p-3">{m.body_fat ?? "-"}</td>
-        <td className="p-3">{m.hips ?? "-"}</td>
-        <td className="p-3">{m.shoulders ?? "-"}</td>
-      </tr>
-    ))
-  )}
-</tbody>
-  </table>
-</div>
+          <tbody>
+            {measurements.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="p-4 text-center text-gray-400">
+                  No measurements recorded yet.
+                </td>
+              </tr>
+            ) : (
+              measurements.map((m) => (
+                <tr key={m.id} className="border-t border-gray-800">
+                  <td className="p-3">
+                    {new Date(m.recorded_at).toLocaleDateString()}
+                  </td>
+                  <td className="p-3">{m.weight ?? "-"}</td>
+                  <td className="p-3">{m.body_fat ?? "-"}</td>
+                  <td className="p-3">{m.hips ?? "-"}</td>
+                  <td className="p-3">{m.shoulders ?? "-"}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
     </div>
   );
 }
